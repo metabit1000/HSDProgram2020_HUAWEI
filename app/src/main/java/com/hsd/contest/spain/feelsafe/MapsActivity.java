@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,9 +15,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
+import com.huawei.hms.kit.awareness.Awareness;
+import com.huawei.hms.kit.awareness.capture.LocationResponse;
 import com.huawei.hms.maps.CameraUpdate;
 import com.huawei.hms.maps.CameraUpdateFactory;
 import com.huawei.hms.maps.HuaweiMap;
@@ -29,7 +36,7 @@ import java.util.regex.Pattern;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "Resultado:";
+    private static final String TAG = "Resultado: ";
 
     private static final String[] RUNTIME_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -45,6 +52,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageButton sos;
     ImageButton settings;
 
+    private Location location;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +63,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE);
         }
 
-        sos = (ImageButton)findViewById(R.id.SOS);
-        settings = (ImageButton)findViewById(R.id.settings);
+        sos = (ImageButton) findViewById(R.id.SOS);
+        settings = (ImageButton) findViewById(R.id.settings);
 
         sos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel","112",null)));
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", GlobalVariables.telf, null)));
             }
         });
 
@@ -80,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MapsInitializer.setApiKey("CgB6e3x9MPbI8iITjvfTfjI82nRwFI0Y7vFnXcFUeM8TdYtCWhs6L6JP+417gXvM4kZaC2pEr5lUp5uKUU/SxZxo");
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this); //get map instance
+
     }
 
     @Override
@@ -118,12 +128,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onMapReady: ");
         hMap = map;
 
-        /* Dos opciones:
-           1. Mi location
-           2. Una location puesta para testing con zonas peligrosas cerca
-        */
+        //get my location
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
 
-        CameraPosition build = new CameraPosition.Builder().target(new LatLng(60, 60)).zoom(5).build();
+        Awareness.getCaptureClient(this).getLocation()
+                .addOnSuccessListener(new OnSuccessListener<LocationResponse>() {
+                    @Override
+                    public void onSuccess(LocationResponse locationResponse) {
+                        Location location = locationResponse.getLocation();
+                        Log.i(TAG, "Longitude:" + location.getLongitude()
+                                + ",Latitude:" + location.getLatitude());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.e(TAG, "get location failed", e);
+                    }
+                });
+
+
+        LatLng ubicacion = new LatLng(41.488810758183774, 2.354986251477044);
+
+        CameraPosition build = new CameraPosition.Builder().target(ubicacion).zoom(16).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(build);
         hMap.animateCamera(cameraUpdate);
     }
@@ -138,4 +167,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return true;
     }
+
 }

@@ -2,10 +2,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-31dp">
 
+        <com.huawei.hms.ads.banner.BannerView
+            android:id="@+id/hw_banner_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:adId="testw6vs28auh3"
+            app:bannerSize="BANNER_SIZE_360_144" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text="Info:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.233"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.289" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="178dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/cambiar"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text="Teléfono de emergencia:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.064" />
+
+    <Button
+        android:id="@+id/cambiar"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Cambiar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.891"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <TextView
+        android:id="@+id/telf"
+        android:layout_width="178dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="36dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cambiar"
+        app:layout_constraintHorizontal_bias="0.891"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.146" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
