@@ -47,12 +47,11 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         telfImportante = (TextView)findViewById(R.id.telf);
-        telfImportante.setText(GlobalVariables.telf);
+        telfImportante.setText(GlobalVariables.getTelf());
 
         cambiar = (Button)findViewById(R.id.cambiar);
 
         HwAds.init(this);
-
         BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
         AdParam adParam = new AdParam.Builder().build();
         bottomBannerView.loadAd(adParam);
@@ -78,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
             String telf = cursor.getString(number);
 
             telfImportante.setText(telf);
-            GlobalVariables.telf = telf;
+            GlobalVariables.setTelf(telf);
         }
     }
 
