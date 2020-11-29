@@ -16,21 +16,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.huawei.hmf.tasks.OnFailureListener;
-import com.huawei.hmf.tasks.OnSuccessListener;
-import com.huawei.hms.kit.awareness.Awareness;
-import com.huawei.hms.kit.awareness.capture.CapabilityResponse;
-import com.huawei.hms.kit.awareness.capture.LocationResponse;
-import com.huawei.hms.kit.awareness.status.CapabilityStatus;
 import com.huawei.hms.maps.CameraUpdate;
 import com.huawei.hms.maps.CameraUpdateFactory;
 import com.huawei.hms.maps.HuaweiMap;
@@ -39,17 +32,18 @@ import com.huawei.hms.maps.MapsInitializer;
 import com.huawei.hms.maps.OnMapReadyCallback;
 import com.huawei.hms.maps.model.BitmapDescriptor;
 import com.huawei.hms.maps.model.BitmapDescriptorFactory;
-import com.huawei.hms.maps.model.CameraPosition;
-import com.huawei.hms.maps.model.Circle;
 import com.huawei.hms.maps.model.CircleOptions;
 import com.huawei.hms.maps.model.LatLng;
+
 import com.huawei.hms.maps.model.Marker;
 import com.huawei.hms.maps.model.MarkerOptions;
+import com.huawei.hms.maps.model.Polyline;
+import com.huawei.hms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.regex.Pattern;
+
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -77,8 +71,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageButton search;
 
     private Location location; //mi ubicacion
-    private Marker marcador;
-    private Marker marcadorBusqueda;
+    private Marker marcador; //origin marker
+    private Marker marcadorBusqueda; //destination marker
+    private Polyline route;
 
     double lat = 0.0;
     double lng = 0.0;
@@ -165,6 +160,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //get map instance in a callback method
         Log.d(TAG, "onMapReady: ");
         hMap = map;
+
+        hMap.getUiSettings().setZoomGesturesEnabled(true);
+        hMap.getUiSettings().setRotateGesturesEnabled(true);
 
         //get my location
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -270,8 +268,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
             else marcadorBusqueda.remove();
 
+            saferRouteCreation(lat, lng); //creacion de la ruta "segura"
+
             GlobalVariables.setSelectedPosition(-1);
         }
+
 
         hMap.animateCamera(miUbicacion);
     }
@@ -325,6 +326,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         actualizarUbicacion(location);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,0,locationListener);
+    }
+
+    private void saferRouteCreation(double lat, double lng) {
+        LatLng originCoord = new LatLng(lat, lng);
+        LatLng destinationCoord = GlobalVariables.places.get(GlobalVariables.getSelectedPosition()).location;
+
+        route = hMap.addPolyline(new PolylineOptions().add(originCoord, destinationCoord).color(Color.RED).width(2));
     }
 
 }
