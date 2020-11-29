@@ -74,9 +74,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ImageButton sos;
     ImageButton settings;
+    ImageButton search;
 
     private Location location; //mi ubicacion
     private Marker marcador;
+    private Marker marcadorBusqueda;
+
     double lat = 0.0;
     double lng = 0.0;
 
@@ -93,6 +96,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         sos = (ImageButton) findViewById(R.id.SOS);
         settings = (ImageButton) findViewById(R.id.settings);
+        search = (ImageButton) findViewById(R.id.search);
 
         sos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +112,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, SearchActivity.class));
+            }
+        });
+
         mMapView = findViewById(R.id.mapView);
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -117,7 +128,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MapsInitializer.setApiKey("CgB6e3x9MPbI8iITjvfTfjI82nRwFI0Y7vFnXcFUeM8TdYtCWhs6L6JP+417gXvM4kZaC2pEr5lUp5uKUU/SxZxo");
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this); //get map instance
-
     }
 
     @Override
@@ -239,7 +249,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < locations.size(); ++i) {
             hMap.addCircle(new CircleOptions().center(locations.get(i)).radius(radio).radius(500)
                     .fillColor(Color.argb(70, 150, 50, 50))
-                    .strokeColor(Color.TRANSPARENT));  //esto con Polygons sería mucho mejor, pero era bastante más trabajo buscar y poner los puntos de donde acaban los barrios
+                    .strokeColor(Color.TRANSPARENT));  //esto con Polygons sería mucho mejor, pero era bastante más trabajo buscar y poner los puntos de donde acaban los barrios "peligrosos"
         }
     }
 
@@ -252,6 +262,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 80, 100, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
         marcador = hMap.addMarker(new MarkerOptions().position(coordenades).title("My location").icon(smallMarkerIcon));
+
+        if (GlobalVariables.getSelectedPosition() != -1) { //agregar marcador para la location escogida en la busqueda
+            LatLng coor = GlobalVariables.places.get(GlobalVariables.getSelectedPosition()).location;
+            if (marcadorBusqueda == null) {
+                marcadorBusqueda = hMap.addMarker(new MarkerOptions().position(coor).title("SearchedLocation").icon(smallMarkerIcon));
+            }
+            else marcadorBusqueda.remove();
+
+            GlobalVariables.setSelectedPosition(-1);
+        }
+
         hMap.animateCamera(miUbicacion);
     }
 
@@ -271,7 +292,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onLocationChanged(Location location) {
             actualizarUbicacion(location);
             //vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            System.out.println("LA UBICACIO ESTA DEL REVES" + location.getLongitude() + " " + location.getLatitude());
             //mySong = MediaPlayer.create(MapsActivity.this, R.raw.song);
 
             //alg.core(mMap,location,vibrator, mySong);

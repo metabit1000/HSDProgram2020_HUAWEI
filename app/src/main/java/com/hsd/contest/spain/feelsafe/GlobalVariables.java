@@ -2,8 +2,25 @@ package com.hsd.contest.spain.feelsafe;
 
 import android.app.Application;
 
+import com.huawei.hms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
 public class GlobalVariables extends Application {
     private static String telf = "112";
+
+    public static class ListItem {
+        String name;
+        LatLng location;  //latitud y longitud para ponerlo en el mapa
+
+        public ListItem(String name, LatLng location) {
+            this.name = name;
+            this.location = location;
+        }
+    }
+
+    public static ArrayList<ListItem> places = new ArrayList<ListItem>();
+    private static int selectedPosition = -1;
 
     public static String getTelf() {
         return telf;
@@ -11,5 +28,13 @@ public class GlobalVariables extends Application {
 
     public static void setTelf(String telf) {
         GlobalVariables.telf = telf;
+    }
+
+    public static int getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public static void setSelectedPosition(int selectedPosition) {
+        GlobalVariables.selectedPosition = selectedPosition;
     }
 }

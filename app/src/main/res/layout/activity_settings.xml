@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <RelativeLayout
         android:id="@+id/root_view"
         android:layout_width="match_parent"
@@ -27,15 +28,15 @@
         android:id="@+id/text3"
         android:layout_width="107dp"
         android:layout_height="wrap_content"
-        android:scaleX="2"
-        android:scaleY="2"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:text="Info:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.233"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.289" />
+        app:layout_constraintVertical_bias="0.287" />
 
     <TextView
         android:id="@+id/text1"
@@ -45,12 +46,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/cambiar"
-        android:scaleX="2"
-        android:scaleY="2"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:text="Teléfono de emergencia:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintHorizontal_bias="0.274"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.064" />
@@ -77,8 +78,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:scaleX="2"
-        android:scaleY="2"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.57"
