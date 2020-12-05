@@ -24,7 +24,7 @@ Funcionalidades de la aplicación:
 
 6. Info útil para tu seguridad en la pantalla settings obtenida usando el Awareness Kit; como ejemplo tiempo, hora, si está oscuro... (a veces falla el Awareness Kit y no muestra toda la info)
 
-7. En caso de entrar o estar en una zona peligrosa, suena (Vibrator Android) y se muestra en la aplicación un warning para advertirte de ir con cuidado debido a que estas en una de las zonas peligrosas.
+7. En caso de entrar o estar en una zona peligrosa, suena (Vibrator Android) y se muestra en la aplicación un warning para advertirte de ir con cuidado debido a que estas en una de las zonas peligrosas. Se ha usado las locationBarrier del Awareness Kit.
 
 ## Para probar la aplicación: 
 
@@ -45,6 +45,6 @@ Otro método para probar que es el que he estado usando con un teléfono Huawei 
 ![Image of App Login](images/Login.JPG)
 ![Image maps1](images/Maps.JPG)
 ![Image maps2](images/Maps2.JPG)
-![Image maps with search](images/MapsWithSearch.JPG)
 ![Image search](images/Search.JPG)
+![Image maps with search](images/MapsWithSearch.JPG)
 ![Image settings](images/Settings.jpg)
