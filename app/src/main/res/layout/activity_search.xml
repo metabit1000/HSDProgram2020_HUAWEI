@@ -47,15 +47,15 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="344dp"
-        android:layout_height="414dp"
+        android:layout_width="336dp"
+        android:layout_height="504dp"
         android:layout_marginTop="29dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_search"
-        app:layout_constraintVertical_bias="0.321" />
+        app:layout_constraintVertical_bias="0.054" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

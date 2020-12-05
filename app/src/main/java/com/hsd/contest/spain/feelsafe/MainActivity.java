@@ -11,9 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.BannerAdSize;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.banner.BannerView;
 import com.huawei.hms.api.ConnectionResult;
 import com.huawei.hms.api.HuaweiMobileServicesUtil;
 import com.huawei.hms.common.ApiException;
@@ -76,6 +81,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(service.getSignInIntent(), 8888);
             }
         });
+
+        HwAds.init(this);
+        AdParam adParam = new AdParam.Builder().build();
+
+        BannerView topBannerView = new BannerView(this);
+        topBannerView.setAdId("testw6vs28auh3");
+        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_SMART);
+        topBannerView.loadAd(adParam);
+
+        RelativeLayout rootView = findViewById(R.id.root_view);
+        rootView.addView(topBannerView);
 
     }
 
