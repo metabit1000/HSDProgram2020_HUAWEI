@@ -31,11 +31,11 @@ Funcionalidades de la aplicación:
 Se recomienda usar el Cloud Debugger ya que permite poner la location que quieras y por tanto poner una que este dentro de una zona peligrosa. El problema es que el Awareness Kit no funciona correctamente en el Cloud Debugger, por tanto la funcionalidad de mostrar un warning si estas dentro de una zona y la info útil no funcionan por desgracia.
 
 - Ejemplo location **dentro** de zona peligrosa: 
-    Longitud: 2.1682149000000663
+    Longitud: 2.1682149000000663,
     Latitud: 41.3798432
    
 - Ejemplo de location **fuera** de zona peligrosa:
-    Longitud: 1.9270983540201814
+    Longitud: 1.9270983540201814,
     Latitud: 41.30769110499487
     
 Otro método para probar que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la línea 251 de MapsActivity. 
