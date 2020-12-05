@@ -38,6 +38,6 @@ Se recomienda usar el Cloud Debugger ya que permite poner la location que quiera
     Longitud: 1.9270983540201814,
     Latitud: 41.30769110499487
     
-Otro método para probar que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la línea 251 de MapsActivity. 
+Otro método para probar que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la **línea 251** de MapsActivity. 
 
 ## Capturas de la aplicación: 
