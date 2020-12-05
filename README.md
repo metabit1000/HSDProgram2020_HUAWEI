@@ -47,4 +47,4 @@ Otro método para probar que es el que he estado usando con un teléfono Huawei 
 ![Image maps2](images/Maps2.JPG)
 ![Image maps with search](images/MapsWithSearch.JPG)
 ![Image search](images/Search.JPG)
-![Image settings](images/Settings.jpeg)
+![Image settings](images/Settings.jpg)
