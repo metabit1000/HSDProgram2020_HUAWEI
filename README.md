@@ -42,4 +42,4 @@ Otro método para probar que es el que he estado usando con un teléfono Huawei 
 
 ## Capturas de la aplicación: 
 
-![Image of App Login](https://raw.githubusercontent.com/metabit1000/HSDProgram2020_HUAWEI/master/images/Login.JPG)
+![Image of App Login](images/Login.JPG)
