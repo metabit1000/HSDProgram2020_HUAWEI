@@ -43,3 +43,8 @@ Otro método para probar que es el que he estado usando con un teléfono Huawei 
 ## Capturas de la aplicación: 
 
 ![Image of App Login](images/Login.JPG)
+![Image maps1](images/Maps.JPG)
+![Image maps2](images/Maps2.JPG)
+![Image maps with search](images/MapsWithSearch.JPG)
+![Image search](images/Search.JPG)
+![Image settings](images/Settings.jpeg)
