@@ -1,10 +1,10 @@
-## HSD Program Spain 2020 de HUAWEI
+# HSD Program Spain 2020 de HUAWEI
 
 Participación al HSD Program Spain 2020 de HUAWEI.
 
 Página web del evento: https://developer.huawei.com/consumer/en/activity/digixActivity/digixdetail/201603786075567814
 
-# Aplicación creada:
+## Aplicación creada:
 
 Para la participación en el concurso he creado una aplicación llamada FeelSafe para principalmente advertir a los usuarios al entrar en el radio de influencia de zonas peligrosas de la ciudad de Barcelona mediante tu ubicación con el uso de los kits de Huawei Mobile Services (HMS). 
 
@@ -26,7 +26,7 @@ Funcionalidades de la aplicación:
 
 7. En caso de entrar o estar en una zona peligrosa, suena (Vibrator Android) y se muestra en la aplicación un warning para advertirte de ir con cuidado debido a que estas en una de las zonas peligrosas.
 
-# Para probar la aplicación: 
+## Para probar la aplicación: 
 
 Se recomienda usar el Cloud Debugger ya que permite poner la location que quieras y por tanto poner una que este dentro de una zona peligrosa. El problema es que el Awareness Kit no funciona correctamente en el Cloud Debugger, por tanto la funcionalidad de mostrar un warning si estas dentro de una zona y la info útil no funcionan por desgracia.
 
@@ -40,6 +40,6 @@ Se recomienda usar el Cloud Debugger ya que permite poner la location que quiera
     
 Otro método para probar que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la línea 251 de MapsActivity. 
 
-# Imagenes de la aplicación:  (el diseño es mejorable)
+## Imagenes de la aplicación:  (el diseño es mejorable)
 
 
