@@ -41,3 +41,5 @@ Se recomienda usar el Cloud Debugger ya que permite poner la location que quiera
 Otro método para probar que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la **línea 251** de MapsActivity. 
 
 ## Capturas de la aplicación: 
+
+![Image of App Login](https://raw.githubusercontent.com/metabit1000/HSDProgram2020_HUAWEI/master/HSDProgram2020_HUAWEI/images/Captura1.png)
