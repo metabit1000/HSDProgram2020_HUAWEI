@@ -30,7 +30,7 @@ Funcionalidades de la aplicación:
 
 Se recomienda usar el Cloud Debugger ya que permite poner la location que quieras y por tanto poner una que este dentro de una zona peligrosa. El problema es que el Awareness Kit no me funciona correctamente en el Cloud Debugger, por tanto la funcionalidad de mostrar un warning si estas dentro de una zona y la info útil no funcionan por desgracia.
 
-¡CUIDADO, en un móvil Huawei no funciona tampoco si no se dan permisos en la aplicación HMS de ubicación!
+¡CUIDADO, en un móvil Huawei no funciona tampoco si no se dan permisos de ubicación en la aplicación HMS!
 
 - Ejemplo location **dentro** de zona peligrosa: 
     Longitud: 2.1682149000000663,
