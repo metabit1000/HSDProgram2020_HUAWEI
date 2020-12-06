@@ -59,7 +59,6 @@ public class SettingsActivity extends AppCompatActivity {
         lightIntensity = (TextView) findViewById(R.id.lightIntensity);
 
 
-
         HwAds.init(this);
         BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
         AdParam adParam = new AdParam.Builder().build();
@@ -107,7 +106,7 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AmbientLightResponse ambientLightResponse) {
                         AmbientLightStatus ambientLightStatus = ambientLightResponse.getAmbientLightStatus();
-                        System.out.println("Light intensity is " + ambientLightStatus.getLightIntensity());
+                        Log.e("SUCCESS:","Light intensity is " + ambientLightStatus.getLightIntensity());
 
                         //Ponerla en la vista
                         lightIntensity.setText(Float.toString(ambientLightStatus.getLightIntensity()));
@@ -170,12 +169,11 @@ public class SettingsActivity extends AppCompatActivity {
                         WeatherSituation weatherSituation = weatherStatus.getWeatherSituation();
                         Situation situation = weatherSituation.getSituation();
                         String weatherInfoStr =
-                                "El tiempo hoy es: " + situation.getWeatherId() + "\n" +
+                                "Ciudad:" + weatherSituation.getCity().getName() + "\n" +
+                                "El tiempo hoy es: " + getWeather(situation.getWeatherId()) + "\n" +
                                 "La temperatura es: " + situation.getTemperatureC() + "℃" + "\n" +
-                                "Wind speed is " + situation.getWindSpeed() + "km/h" + "\n" +
-                                "Wind direction is " + situation.getWindDir() + "\n" +
-                                "Humidity is " + situation.getHumidity() + "%";
-                        //Mejorar...
+                                "La velocidad del viento es: " + situation.getWindSpeed() + "km/h" + "\n" +
+                                "La humedad es de: " + situation.getHumidity() + "%";
 
                         weather.setText(weatherInfoStr);
                     }
@@ -186,6 +184,39 @@ public class SettingsActivity extends AppCompatActivity {
                         weather.setText("Error");
                     }
                 });
+    }
+
+    private String getWeather(int id) {
+        String result = "No hay info disponible";
+        switch (id) {
+            case 1:
+                result = "Hace sol";
+                break;
+            case 2:
+                result = "Hace mayormente sol";
+                break;
+            case 3:
+                result = "Hace poco sol";
+                break;
+            case 4:
+                result = "Algunas nubes a la vista";
+                break;
+            case 5:
+                result = "Hace algo de sol, pero con nubes";
+                break;
+            case 6:
+                result = "Mayormente nublado";
+                break;
+            case 7:
+                result  = "Está nublado";
+                break;
+            case 18:
+                result = "Está lloviendo";
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 
 }
