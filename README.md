@@ -26,12 +26,15 @@ Funcionalidades de la aplicación:
 
 7. En caso de entrar o estar en una zona peligrosa, suena y vibra (Vibrator Android) y se muestra en la aplicación un warning para advertirte de ir con cuidado debido a que estas en una de las zonas peligrosas. Se ha usado las locationBarrier del Awareness Kit.
 
+En caso de querer llevar la aplicación a la práctica, esto es solo un prototipo, se podría mejorar poniendo las zonas peligrosas (con un estudio detrás teniendo en cuenta los robos, agresiones, etc por barrio) en las ciudades más importantes de Europa.
+
 ## Para probar la aplicación: 
 
 Se recomienda usar el Cloud Debugger ya que permite poner la location que quieras y por tanto poner una que este dentro de una zona peligrosa. El problema es que el Awareness Kit no me funciona correctamente en el Cloud Debugger, por tanto la funcionalidad de mostrar un warning si estas dentro de una zona y la info útil no funcionan por desgracia.
 
 ¡CUIDADO, en un móvil Huawei no funciona tampoco si no se dan permisos de ubicación en la aplicación HMS!
 
+Ejemplos para probar la aplicación: (locations en la ciudad de Barcelona)
 - Ejemplo location **dentro** de zona peligrosa: 
     Longitud: 2.1682149000000663,
     Latitud: 41.3798432
