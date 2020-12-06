@@ -8,7 +8,7 @@ Página web del evento: https://developer.huawei.com/consumer/en/activity/digixA
 
 Para la participación en el concurso he creado una aplicación llamada FeelSafe para principalmente advertir a los usuarios al entrar en el radio de influencia de zonas peligrosas de la ciudad de Barcelona mediante tu ubicación con el uso de los kits de Huawei Mobile Services (HMS). 
 
-Los kits utilizados han sido el **Account Kit**, el **Maps Kit**, el **Ads kit**, el **Awareness Kit** y el **Site kit**.
+Los kits de HUAWEI utilizados han sido el **Account Kit**, el **Maps Kit**, el **Ads kit**, el **Awareness Kit** y el **Site kit**.
 
 Funcionalidades de la aplicación:
 
