@@ -22,7 +22,7 @@ Funcionalidades de la aplicación:
 
 5. Botón de SOS para llamar en caso de emergencia (robo, secuestro, agresión, etc) que se puede cambiar desde la pantalla de settings introduciendo el tlf que más te interese. Por defecto, está puesto el 112.
 
-6. Info útil para tu seguridad en la pantalla settings obtenida usando el Awareness Kit; como ejemplo tiempo, hora, si está oscuro... (a veces falla el Awareness Kit y no muestra toda la info)
+6. Info útil para tu seguridad en la pantalla settings obtenida usando el Awareness Kit; como ejemplo tiempo, viento, luminosidad...parámetros que pueden servir para mejorar tu seguridad. (ha servido para testear con el Awareness Kit)
 
 7. En caso de entrar o estar en una zona peligrosa, suena y vibra (Vibrator Android) y se muestra en la aplicación un warning para advertirte de ir con cuidado debido a que estas en una de las zonas peligrosas. Se ha usado las locationBarrier del Awareness Kit.
 
