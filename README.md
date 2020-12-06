@@ -43,7 +43,7 @@ Ejemplos para probar la aplicación: (locations en la ciudad de Barcelona)
     
 Otro método para probar la aplicación que es el que he estado usando con un teléfono Huawei prestado, es introducir una zona peligrosa justo donde te encuentras. Se puede hacer en la **línea 251** de MapsActivity. (simplemente descomentar e introducir las coordenadas que te interesan)
 
-¡CUIDADO, usando un móvil Huawei no funciona tampoco si no se dan permisos de ubicación en la aplicación HMS!
+¡CUIDADO, usando un móvil Huawei el Awareness Kit no funciona tampoco si no se dan permisos de ubicación en la aplicación HMS!
 
 ## Capturas de la aplicación: 
 
