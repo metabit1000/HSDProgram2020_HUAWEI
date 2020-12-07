@@ -1,6 +1,7 @@
 package com.hsd.contest.spain.feelsafe;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -59,8 +60,6 @@ import com.huawei.hms.kit.awareness.barrier.LocationBarrier;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "Resultado: ";
-
     private static final String[] RUNTIME_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET};
@@ -93,7 +92,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PendingIntent mPendingIntent;
     private LocationBarrierReceiver mBarrierReceiver;
     private static final String STAY_BARRIER_LABEL = "stay barrier label";
-    private static final String ENTER_BARRIER_LABEL = "enter barrier label";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +102,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE);
         }
 
-        checkAndRequestPermissions(); //awareness kit
+        checkAndRequestPermissions(); //Awareness Kit
 
         sos = (ImageButton) findViewById(R.id.SOS);
         settings = (ImageButton) findViewById(R.id.settings);
@@ -120,6 +118,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //abre la aplicacion para hacer llamada con el telefono en caso de emergencia introducido
                 startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", GlobalVariables.getTelf(), null)));
             }
         });
@@ -138,6 +137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        //Configuración del mapa
         mMapView = findViewById(R.id.mapView);
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -181,8 +181,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(HuaweiMap map) {
-        //get map instance in a callback method
-        Log.d(TAG, "onMapReady: ");
         hMap = map;
 
         hMap.getUiSettings().setZoomGesturesEnabled(true);
@@ -192,7 +190,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
 
-        addDangerousPlaces();
+        addDangerousPlaces(); //añado las zonas/barrios peligrosos de la ciudad de Barcelona
         miUbicacion(); //actualiza la ubicación del telefono automaticamente
     }
 
@@ -207,7 +205,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
-    private void checkAndRequestPermissions() {
+    private void checkAndRequestPermissions() { //chequear permisos para el Awareness Kit
         List<String> permissionsDoNotGrant = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             for (String permission : mPermissionsOnHigherVersion) {
@@ -235,7 +233,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double radio = 700.0;
         ArrayList<LatLng> locations = new ArrayList<LatLng>();
 
-        //Localizacion de las zonas peligrosas de la ciudad de Barcelona hardcodeadas (lo suyo sería bajarlas de una API)
+        //Localizacion de las zonas peligrosas de la ciudad de Barcelona hardcodeadas (lo correcto/ideal sería obtenerlas de una API)
         locations.add(new LatLng(41.3798432, 2.1682149000000663));
         locations.add(new LatLng(41.3746936, 2.172931));
         locations.add(new LatLng(41.3604232, 2.1317501));
@@ -248,7 +246,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locations.add(new LatLng(41.3865438, 2.1788116));
         locations.add(new LatLng(41.426887, 1.788163));
         locations.add(new LatLng(41.440676, 1.866005));
-        locations.add(new LatLng(41.496884603140266, 2.3586909558738514)); //testing
+        //locations.add(new LatLng(yourlat, yourlong)); //testing
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -259,37 +257,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .fillColor(Color.argb(70, 150, 50, 50))
                     .strokeColor(Color.TRANSPARENT));  //esto con Polygons sería mucho mejor, pero era bastante más trabajo buscar y poner los puntos de donde acaban los barrios "peligrosos"
 
-
-            AwarenessBarrier enterBarrier = LocationBarrier.enter(locations.get(i).latitude, locations.get(i).longitude, radio);
-            addBarrier(this, STAY_BARRIER_LABEL, enterBarrier, mPendingIntent);
-            addBarrier(this, ENTER_BARRIER_LABEL, enterBarrier, mPendingIntent);
-
+            AwarenessBarrier stayBarrier = LocationBarrier.stay(locations.get(i).latitude, locations.get(i).longitude, radio, 1000L);
+            addBarrier(this, STAY_BARRIER_LABEL, stayBarrier, mPendingIntent); //añado esa zona peligrosa a una locationBarrier del Awareness Kit
         }
-
     }
-
 
     private void agregarMarcador(double lat, double lng) {
         LatLng coordenades = new LatLng(lat, lng);
-        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenades, 14);
-        if (marcador != null) marcador.remove();
+        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenades, 14); //pongo la camara del mapa en la posicion donde esta mi ubicacion y el marcador
+
+        if (marcador != null) marcador.remove(); //elimino el marcador por si mi ubicacion cambia
         Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.marcador);
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 80, 100, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-        marcador = hMap.addMarker(new MarkerOptions().position(coordenades).title("My location").icon(smallMarkerIcon));
+        marcador = hMap.addMarker(new MarkerOptions().position(coordenades).title("Mi ubicacion").icon(smallMarkerIcon)); //creo marcador con mi ubicación
 
-        if (GlobalVariables.getSelectedPosition() != -1) { //agregar marcador para la location escogida en la busqueda
+        if (GlobalVariables.getSelectedPosition() != -1) { //agregar marcador para la location escogida en la busqueda de SearchActivity
             LatLng coor = GlobalVariables.places.get(GlobalVariables.getSelectedPosition()).location;
             if (marcadorBusqueda == null) {
-                marcadorBusqueda = hMap.addMarker(new MarkerOptions().position(coor).title("SearchedLocation").icon(smallMarkerIcon));
+                marcadorBusqueda = hMap.addMarker(new MarkerOptions().position(coor).title(GlobalVariables.places.get(GlobalVariables.getSelectedPosition()).name).icon(smallMarkerIcon));
             }
             else marcadorBusqueda.remove();
 
-            saferRouteCreation(lat, lng); //creacion de la ruta "segura"
+            saferRouteCreation(lat, lng); //creacion de la ruta "segura" (es solo una línea recta por el momento)
 
-            GlobalVariables.setSelectedPosition(-1);
+            GlobalVariables.setSelectedPosition(-1); //para que no vuelva a entrar hasta que se seleccione un site nuevo
         }
-
 
         hMap.animateCamera(miUbicacion);
     }
@@ -309,10 +302,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onLocationChanged(Location location) {
             actualizarUbicacion(location);
-            //vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            //mySong = MediaPlayer.create(MapsActivity.this, R.raw.song);
-
-            //alg.core(mMap,location,vibrator, mySong);
         }
 
         @Override
@@ -335,14 +324,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void miUbicacion() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
 
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         System.out.println("UBI COORD: " + location.getLongitude() + " :" + location.getLatitude());
 
-        //Manualmente para testear
+        //Manualmente introducir la location para testear
         //location.setLatitude(41.3798432);
         //location.setLongitude(2.1682149000000663);
 
@@ -364,50 +352,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             String label = barrierStatus.getBarrierLabel();
             int barrierPresentStatus = barrierStatus.getPresentStatus();
             switch (label) {
-                case ENTER_BARRIER_LABEL:
-                    if (barrierPresentStatus == BarrierStatus.TRUE) {
-                        Toast.makeText(MapsActivity.this, "¡Estas entrando en zona peligrosa!", Toast.LENGTH_SHORT).show();
-
-                        //Suena sonido o muestra notificacion para avisar
-                    } else if (barrierPresentStatus == BarrierStatus.FALSE) {
-                        System.out.println("No estas entrando en zona peligrosa");
-                        Toast.makeText(MapsActivity.this, "No estas entrando en zona peligrosa", Toast.LENGTH_SHORT).show();
-                    } else {
-                        System.out.println("Tu posicion es desconocida");
-                        Toast.makeText(MapsActivity.this, "Tu posicion es desconocida", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
                 case STAY_BARRIER_LABEL:
                     if (barrierPresentStatus == BarrierStatus.TRUE) {
                         Toast.makeText(MapsActivity.this, "¡Estas en zona peligrosa!", Toast.LENGTH_SHORT).show();
 
-                        //Suena sonido o muestra notificacion para avisar
+                        //Suena sonido y vibra para avisar
+                        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        MediaPlayer mySong = MediaPlayer.create(MapsActivity.this, R.raw.warningsound);
+
+                        mySong.start(); //suena sonido
+                        vibrator.vibrate(1000); //vibra
                     } else if (barrierPresentStatus == BarrierStatus.FALSE) {
-                        System.out.println("No estas en zona peligrosa");
                         Toast.makeText(MapsActivity.this, "¡NO Estas en zona peligrosa!", Toast.LENGTH_SHORT).show();
                     } else {
-                        System.out.println("Tu posicion es desconocida");
                         Toast.makeText(MapsActivity.this, "Tu posicion es desconocida", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                 //se podría hacer en caso de entrar en la zona peligrosa también
             }
         }
     }
 
-    public void addBarrier(Context context, final String label, AwarenessBarrier barrier, PendingIntent pendingIntent) {
+    public static void addBarrier(Context context, final String label, AwarenessBarrier barrier, PendingIntent pendingIntent) {
         BarrierUpdateRequest.Builder builder = new BarrierUpdateRequest.Builder();
         BarrierUpdateRequest request = builder.addBarrier(label, barrier, pendingIntent).build();
         Awareness.getBarrierClient(context).updateBarriers(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(MapsActivity.this, "Success al crear Barrier", Toast.LENGTH_SHORT).show();
+                        Log.e("SUCCESS", "Success al crear Barrier");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(Exception e) {
-                        Toast.makeText(MapsActivity.this, "Error al crear Barrier", Toast.LENGTH_SHORT).show();
+                        Log.e("ERROR", "Error al crear Barrier");
                     }
                 });
     }

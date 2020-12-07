@@ -32,8 +32,6 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "Result";
-
     EditText email;
     EditText password;
     Button signin;
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //Logueo usando creedenciales ya creados
                 String mail = email.getText().toString();
                 String pass = password.getText().toString();;
 
@@ -74,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
 
         signinHuawei.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Account Kit
+            public void onClick(View v) { //Logueo usando el Account Kit para inicar con los creedenciales de Huawei
                 HuaweiIdAuthParams authParams = new HuaweiIdAuthParamsHelper(HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM).setIdToken().createParams();
                 HuaweiIdAuthService service = HuaweiIdAuthManager.getService(MainActivity.this, authParams);
                 startActivityForResult(service.getSignInIntent(), 8888);
             }
         });
 
+        //Añado anuncio arriba en la pantalla
         HwAds.init(this);
         AdParam adParam = new AdParam.Builder().build();
 
@@ -92,10 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout rootView = findViewById(R.id.root_view);
         rootView.addView(topBannerView);
-
     }
 
-    public String isHwService() {
+    public String isHwService() { //Función para comprobar si el telefono tiene los Huawei Mobile Services (visto primer video del curso)
         int res = HuaweiMobileServicesUtil.isHuaweiMobileServicesAvailable(this);
         boolean ret = false;
 
@@ -108,18 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // Process the authorization result to obtain an ID token from AuthHuaweiId.
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 8888) {
             Task<AuthHuaweiId> authHuaweiIdTask = HuaweiIdAuthManager.parseAuthResultFromIntent(data);
             if (((Task) authHuaweiIdTask).isSuccessful()) {
-                // The sign-in is successful, and the user's HUAWEI ID information and ID token are obtained.
                 AuthHuaweiId huaweiAccount = authHuaweiIdTask.getResult();
-                Log.i(TAG, "idToken:" + huaweiAccount.getIdToken());
+                Log.i("SUCCESS: ", "idToken:" + huaweiAccount.getIdToken());
                 startActivity(new Intent(MainActivity.this, MapsActivity.class)); //to mapsActivity
             } else {
-                // The sign-in failed. No processing is required. Logs are recorded to facilitate fault locating.
-                Log.e(TAG, "sign in failed : " +((ApiException)authHuaweiIdTask.getException()).getStatusCode());
+                Log.e("ERROR: ", "Ha fallado el sign in : " +((ApiException)authHuaweiIdTask.getException()).getStatusCode());
                 Toast.makeText(MainActivity.this, "No se ha podido autenticar correctamente, vuelva a intentarlo", Toast.LENGTH_SHORT).show();
             }
         }
