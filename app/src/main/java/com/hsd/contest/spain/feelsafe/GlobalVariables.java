@@ -7,10 +7,10 @@ import com.huawei.hms.maps.model.LatLng;
 import java.util.ArrayList;
 
 public class GlobalVariables extends Application {
-    private static String telf = "112";
+    private static String telf = "112"; //telefono para llamar en caso de emergencia
 
     public static class ListItem {
-        String name;
+        String name;      //nombre del site buscado en SearchActivity
         LatLng location;  //latitud y longitud para ponerlo en el mapa
 
         public ListItem(String name, LatLng location) {
@@ -19,8 +19,8 @@ public class GlobalVariables extends Application {
         }
     }
 
-    public static ArrayList<ListItem> places = new ArrayList<ListItem>();
-    private static int selectedPosition = -1;
+    public static ArrayList<ListItem> places = new ArrayList<ListItem>(); //arraylist para añadir los sites encontrados en la busqueda
+    private static int selectedPosition = -1; //posicion seleccionada en Search Activity
 
     public static String getTelf() {
         return telf;

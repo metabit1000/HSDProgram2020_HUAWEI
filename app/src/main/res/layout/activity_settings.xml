@@ -96,36 +96,49 @@
         android:text="Luminosidad ambiental:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567" />
+        app:layout_constraintVertical_bias="0.66" />
+
+    <TextView
+        android:id="@+id/lightIntensity"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text4"
+        app:layout_constraintVertical_bias="0.086" />
 
     <TextView
         android:id="@+id/timeCategories"
-        android:layout_width="262dp"
-        android:layout_height="33dp"
+        android:layout_width="270dp"
+        android:layout_height="39dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.406" />
+        app:layout_constraintVertical_bias="0.401" />
 
     <TextView
         android:id="@+id/weatherStatus"
-        android:layout_width="262dp"
-        android:layout_height="33dp"
+        android:layout_width="309dp"
+        android:layout_height="106dp"
         android:scaleX="1.2"
         android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintVertical_bias="0.548" />
 
     <TextView
         android:id="@+id/text6"
@@ -140,18 +153,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.352" />
-
-    <TextView
-        android:id="@+id/lightIntensity"
-        android:layout_width="107dp"
-        android:layout_height="wrap_content"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text4"
-        app:layout_constraintVertical_bias="0.059" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.hsd.contest.spain.feelsafe;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,10 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,21 +55,21 @@ public class SettingsActivity extends AppCompatActivity {
         weather = (TextView) findViewById(R.id.weatherStatus);
         lightIntensity = (TextView) findViewById(R.id.lightIntensity);
 
-
-
+        //Añado anuncio abajo
         HwAds.init(this);
         BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
         AdParam adParam = new AdParam.Builder().build();
         bottomBannerView.loadAd(adParam);
 
-        cambiar.setOnClickListener(new View.OnClickListener() { //Acceso a los contactos del telefono
+        cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //Cambiar telefono importante
                 Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
                 startActivityForResult(i, PICK_CONTACT);
             }
         });
 
+        //Obtengo info del Awareness Kit
         getLightIntensity();
         getTimeCategories();
         getWeatherStatus();
@@ -81,13 +78,14 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        //En caso de volver a entrar a la pantalla que los datos se actualicen
         getLightIntensity();
         getTimeCategories();
         getWeatherStatus();
     }
 
     @Override
-    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+    public void onActivityResult(int reqCode, int resultCode, Intent data) { //Acceso a los contactos del telefono para cambiar el telefono de emergencias
         super.onActivityResult(reqCode, resultCode, data);
         if (reqCode == PICK_CONTACT && resultCode == RESULT_OK) {
             Uri contactUri = data.getData();
@@ -107,16 +105,16 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AmbientLightResponse ambientLightResponse) {
                         AmbientLightStatus ambientLightStatus = ambientLightResponse.getAmbientLightStatus();
-                        System.out.println("Light intensity is " + ambientLightStatus.getLightIntensity());
+                        Log.e("SUCCESS:","La intensidad luminosa es " + ambientLightStatus.getLightIntensity());
 
-                        //Ponerla en la vista
+                        //Ponerla en la pantalla
                         lightIntensity.setText(Float.toString(ambientLightStatus.getLightIntensity()));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(Exception e) {
-                        Log.e("ERROR: ", "Failed to get the light intensity.", e);
+                        Log.e("ERROR: ", "Error al conseguir la intensidad luminosa.", e);
 
                         lightIntensity.setText("Error");
                     }
@@ -170,12 +168,11 @@ public class SettingsActivity extends AppCompatActivity {
                         WeatherSituation weatherSituation = weatherStatus.getWeatherSituation();
                         Situation situation = weatherSituation.getSituation();
                         String weatherInfoStr =
-                                "El tiempo hoy es: " + situation.getWeatherId() + "\n" +
+                                "Ciudad:" + weatherSituation.getCity().getName() + "\n" +
+                                "El tiempo hoy es: " + getWeather(situation.getWeatherId()) + "\n" +
                                 "La temperatura es: " + situation.getTemperatureC() + "℃" + "\n" +
-                                "Wind speed is " + situation.getWindSpeed() + "km/h" + "\n" +
-                                "Wind direction is " + situation.getWindDir() + "\n" +
-                                "Humidity is " + situation.getHumidity() + "%";
-                        //Mejorar...
+                                "La velocidad del viento es: " + situation.getWindSpeed() + "km/h" + "\n" +
+                                "La humedad es de: " + situation.getHumidity() + "%";
 
                         weather.setText(weatherInfoStr);
                     }
@@ -186,6 +183,39 @@ public class SettingsActivity extends AppCompatActivity {
                         weather.setText("Error");
                     }
                 });
+    }
+
+    private String getWeather(int id) { //algunos posibles valores que retorna el WeatherId
+        String result = "No hay info disponible";
+        switch (id) {
+            case 1:
+                result = "Hace sol";
+                break;
+            case 2:
+                result = "Hace mayormente sol";
+                break;
+            case 3:
+                result = "Hace poco sol";
+                break;
+            case 4:
+                result = "Algunas nubes a la vista";
+                break;
+            case 5:
+                result = "Hace algo de sol, pero con nubes";
+                break;
+            case 6:
+                result = "Mayormente nublado";
+                break;
+            case 7:
+                result  = "Está nublado";
+                break;
+            case 18:
+                result = "Está lloviendo";
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 
 }
