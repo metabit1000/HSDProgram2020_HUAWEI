@@ -260,6 +260,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             AwarenessBarrier stayBarrier = LocationBarrier.stay(locations.get(i).latitude, locations.get(i).longitude, radio, 1000L);
             addBarrier(this, STAY_BARRIER_LABEL, stayBarrier, mPendingIntent); //añado esa zona peligrosa a una locationBarrier del Awareness Kit
         }
+
     }
 
     private void agregarMarcador(double lat, double lng) {
@@ -362,6 +363,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         mySong.start(); //suena sonido
                         vibrator.vibrate(1000); //vibra
+
                     } else if (barrierPresentStatus == BarrierStatus.FALSE) {
                         Toast.makeText(MapsActivity.this, "¡NO Estas en zona peligrosa!", Toast.LENGTH_SHORT).show();
                     } else {

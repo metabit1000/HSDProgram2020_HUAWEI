@@ -107,6 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
                         AmbientLightStatus ambientLightStatus = ambientLightResponse.getAmbientLightStatus();
                         Log.e("SUCCESS:","La intensidad luminosa es " + ambientLightStatus.getLightIntensity());
 
+
                         //Ponerla en la pantalla
                         lightIntensity.setText(Float.toString(ambientLightStatus.getLightIntensity()));
                     }
