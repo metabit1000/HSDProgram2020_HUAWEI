@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         lightIntensity = (TextView) findViewById(R.id.lightIntensity);
 
         //Añado anuncio abajo
-        HwAds.init(this);
+		HwAds.init(this);
         BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
         AdParam adParam = new AdParam.Builder().build();
         bottomBannerView.loadAd(adParam);
@@ -105,6 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AmbientLightResponse ambientLightResponse) {
                         AmbientLightStatus ambientLightStatus = ambientLightResponse.getAmbientLightStatus();
+
                         Log.e("SUCCESS:","La intensidad luminosa es " + ambientLightStatus.getLightIntensity());
 
                         //Ponerla en la pantalla
@@ -184,6 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private String getWeather(int id) { //algunos posibles valores que retorna el WeatherId
         String result = "No hay info disponible";
